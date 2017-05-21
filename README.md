@@ -1,4 +1,4 @@
-MVC and CMS made by Agne Ødegaard
+MVC made by Agne Ødegaard
 
 # Backend Documentation
 
@@ -28,6 +28,43 @@ This wil run the index method in the MainController class.
 ```php
 Direct::get("/", 'MainController@index');
 ```
+
+Direct::[get, post, put, patch, delete, debug](url, [controller@method, controller, callable])
+
+Example:
+
+Direct::get('/', 'MainController@index')
+
+Direct::get('/profole', 'MainController@profole')->auth()
+
+url = /test/{var}/{optional?}
+
+add a ? at the end of a variable to make it optional like {var?}
+
+if you do not set a method, it will try to call the route as a method instead
+
+Direct::get("/home", 'MainController');
+
+this will try to call the home method in the MainController
+
+for GET, POST, PATCH, PUT, DELETE at the same time (does not include ERROR)
+
+Direct::all(url, callable);
+
+Or if you want more then one method but not all
+
+Direct::on([GET, POST, PATCH, PUT, DELETE, ERROR], url, callable);
+
+Filters:
+
+* ->cache(callable*) //if callable return true page will be cached or if callable = null
+* ->auth()
+* ->mod()
+* ->admin()
+* ->http_code(int) Will set the the http status code for the page
+* ->before(callable($request))
+* ->after(callable($request))
+
 
 ### Post Requests
 This will run the submit method in the MainController class when a post request is made to /submit
