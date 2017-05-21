@@ -1,0 +1,19 @@
+RewriteEngine on
+RewriteBase /
+
+# The flags:
+# NC = not case sensitive
+# L = Last, no more reqriting
+# QSA = Query String Apend
+
+# If not existing file, continue:
+RewriteCond  %{REQUEST_FILENAME} !-f
+
+# If not existing directory, continue:
+RewriteCond  %{REQUEST_FILENAME} !-d
+
+# add a folder path if you use subfolders, wich i realy do not recomend...
+#RewriteRule  ^(.*)$ foldername/index.php?param=$1 [QSA,L]
+
+RewriteRule  ^(.*)$ index.php?param=$1 [QSA,L]
+RewriteRule  ^(app/.*)$ index.php?param=$1 [QSA,L]
