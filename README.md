@@ -267,6 +267,8 @@ All files in the current theme is accesable with @layout('file', [vars]), for an
 
 @endfor
 
+// shorthand comment will output <!--- text --->
+
 
 @layout('layout.foot')
 ```
