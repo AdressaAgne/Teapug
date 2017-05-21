@@ -1,5 +1,18 @@
 MVC made by Agne Ødegaard
 
+# Installation 
+
+1. Download the project
+2. Set root folder as public
+3. Edit database settings in App/Container/Config
+4. Start making fancy websites
+
+## Update
+
+1. Download the project
+2. Replace App/Container and public/index.php with the new files. Aditional files will be noted in patch notes. 
+
+
 # Backend Documentation
 
 ## Logic and Basic Template - App/Controllers
