@@ -2,13 +2,15 @@
     
     <main>
         
-        <h1>Welcome to Teapot</h1>
+        <h1>Teapot MVC</h1>
         
-        <ul>
-            <li>url: {{$data->url()}}</li>
-            <li>{{$assets}}</li>
-        </ul>
+        <p>Start your adventure, go to App/RouteSetup.php</p>
+        <p>Visit our <a href="https://github.com/OrangeeWeb/teapot">Github</a> page for help</p>
         
+        // this is a comment
+        
+        <p>Why Teapot? because 418</p>
+            
     </main>
     
 @layout('layout.foot')

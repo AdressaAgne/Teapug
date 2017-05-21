@@ -36,7 +36,7 @@ class Render {
         $this->addFunction("Helpers",        "@(".implode('|', $this->helpers)."){1}[\s]*\((.*)\)", "<?php $1($2) : ?>");
         $this->addFunction("Helpers End",    "@end(".implode('|', $this->helpers)."){1}", "<?php end$1 ?>");
         $this->addFunction("Else",           "@else", "<?php else : ?>");
-
+        $this->addFunction("Comment",        "\/\/([^\S\n].*)", "<!--- $1 --->");
 
         $this->code = $this->render($code);
     }

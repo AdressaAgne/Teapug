@@ -1,0 +1,29 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+main{
+    width: 600px;
+    margin: 50px auto;
+}
+
+body{
+    font-family: sans-serif;
+    background-color: #f8f8f8;
+    color: #222222;
+}
+
+p{
+    text-align: center;
+    font-variant: small-caps;
+    padding: 10px 20px;
+}
+
+h1{
+    text-align: center;
+    color: #009688;
+    font-weight: bold;
+    font-size: 3em;
+    margin-bottom: 50px;
+}
