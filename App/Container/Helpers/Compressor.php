@@ -101,6 +101,10 @@ class Compressor {
             case "image/jpeg":
                 $source = imagecreatefromjpeg($this->image);
                 break;
+                
+            case "image/gif":
+                $source = imagecreatefromgif($this->image);
+                break;
 
             default:
                 return "Wrong Image type, only jpeg or png";

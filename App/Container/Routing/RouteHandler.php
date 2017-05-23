@@ -2,12 +2,13 @@
 
 namespace App\Container\Routing;
 
-use ErrorHandling, Config, Direct, Route, Request, FilterHandler;
+use ErrorHandling, Config, Direct, Route, Request, EventListener;
 use ReflectionParameter, ReflectionException;
 
 class RouteHandler {
     
     private $route;
+    private static $filter;
     private $url;
     
     /**
@@ -94,10 +95,8 @@ class RouteHandler {
      */
     public function get_page_data(){
         $page = $this->callController($this->get_page());
-
-        if(isset($this->route['filter'])){
-            FilterHandler::filter($this->route['filter'], $page, $this->route);
-        }
+        
+        EventListener::call(E_AFTER);
 
         return $page;
     }
@@ -131,12 +130,11 @@ class RouteHandler {
         $this->route = Direct::getCurrentRoute($url);
 
         //if there is an error in the route, return error page
-        if(array_key_exists('error', $this->route)) return $this->route;
+        if(array_key_exists('error', $this->route)) return [$this->route['error']];
 
         $isError = in_array($url, ['404', '403', '405', '401']);
         //set the callable
         $callable = $this->route['callback'];
-        
         //extract the vars from url
         if(!$isError) $vars = $this->extractVars($url);
         

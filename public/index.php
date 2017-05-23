@@ -49,4 +49,4 @@ require_once('../App/RouteSetup.php');
 require_once("../App/Container/App.php");
 
 // Run App constrcut everything
-new App\Container\App();
+new App();

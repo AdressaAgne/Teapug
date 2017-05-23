@@ -114,43 +114,4 @@ class Database extends DBhelpers{
         return self::query($sql, $data);
     }
     
-    /**
-     * update or insert a new setting value
-     * @author Agne *degaard
-     * @param string $name  
-     * @param string $value
-     */
-    public static function setSetting($name, $value){
-        self::updateWhere('settings', ['value' => $value], ['name' => $name]);
-    }
-    
-    /**
-     * featch a settings value
-     * @author Agne *degaard
-     * @param  string $name 
-     * @return string
-     */
-    public static function getSetting($name){
-        if($setting = self::select('settings', ['value'], ['name' => $name])){
-            return $setting->fetch()['value'];
-        }
-    }
-    
-    /**
-     * switch the order of 2 pages
-     * note: could be done by js, and just pas an array to php, requires a new 'arrange' row in the db
-     */
-    public function pageSwitch($id_1, $id_2){
-        
-        self::updateWhere('pages', ['id' => $id_1], ['id' => $id_2]);
-        self::updateWhere('pages', ['id' => $id_2], ['id' => $id_1]);
-        
-    }
-    
-    public function updatePageArray(array $pages){
-        foreach ($pages as $key => $page) {
-            self::updateWhere('pages', ['arrangement' => $key], ['id' => $page]);
-        }
-    }
-    
 }

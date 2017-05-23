@@ -1,13 +1,13 @@
 <?php
 namespace App\Container;
 
-use Account, RouteHandler, Config, View;
+use Account, RouteHandler, Config, View, EventListener;
 /**
 *   Small Render Engine, very inspirated by Twig
 */
 class Render {
 
-    private $functions = [];
+    private static $functions = [];
     private static $regex = 'uimx';
     private $code = null;
     private $shortcuts = [
@@ -30,14 +30,15 @@ class Render {
     ];
 
     public function __construct($code){
-        $this->addFunction("Raw Output",     "{!([^\}\{]+)!}", "<?php echo $1 ?>");
-        $this->addFunction("Escaped Output", "{{([^\}\{]+)}}", "<?php echo htmlspecialchars($1, ENT_QUOTES, 'UTF-8') ?>");
-        $this->addFunction("shortcuts",      "@(".implode('|', $this->shortcuts)."){1}\\(([^\\)\\(]*)[\\)]","<?php Render::$1($2) ?>");
-        $this->addFunction("Helpers",        "@(".implode('|', $this->helpers)."){1}[\s]*\((.*)\)", "<?php $1($2) : ?>");
-        $this->addFunction("Helpers End",    "@end(".implode('|', $this->helpers)."){1}", "<?php end$1 ?>");
-        $this->addFunction("Else",           "@else", "<?php else : ?>");
-        $this->addFunction("Comment",        "\/\/([^\S\n].*)", "<!--- $1 --->");
-
+        self::addFunction("Raw Output",     "{!([^\}\{]+)!}", "<?php echo $1 ?>");
+        self::addFunction("Escaped Output", "{{([^\}\{]+)}}", "<?php echo htmlspecialchars($1, ENT_QUOTES, 'UTF-8') ?>");
+        self::addFunction("shortcuts",      "@(".implode('|', $this->shortcuts)."){1}\\(([^\\)\\(]*)[\\)]","<?php Render::$1($2) ?>");
+        self::addFunction("Helpers",        "@(".implode('|', $this->helpers)."){1}[\s]*\((.*)\)", "<?php $1($2) : ?>");
+        self::addFunction("Helpers End",    "@end(".implode('|', $this->helpers)."){1}", "<?php end$1 ?>");
+        self::addFunction("Else",           "@else", "<?php else : ?>");
+        
+        EventListener::call(E_RENDER, $this);
+        
         $this->code = $this->render($code);
     }
 
@@ -45,15 +46,15 @@ class Render {
         return new Render($code);
     }
 
-    private function addFunction($name, $regex, $replacement){
-        $this->functions[$name] = [
+    public static function addFunction($name, $regex, $replacement){
+        self::$functions[$name] = [
             'regex' => $regex,
             'replacement' => $replacement,
         ];
     }
 
     private function render($code){
-        foreach($this->functions as $key => $val){
+        foreach(self::$functions as $key => $val){
              $code = preg_replace("/{$val['regex']}/{$this::$regex}", $val['replacement'], $code);
         }
 

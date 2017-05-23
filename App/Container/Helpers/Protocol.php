@@ -188,7 +188,7 @@ class Protocol {
                 return 'Request Header Fields Too Large';
                 
             case 451:
-                return 'Unavailable For Legal Reasons ';
+                return 'Unavailable For Legal Reasons';
             
             // 5xx - Server Error
             case 500:

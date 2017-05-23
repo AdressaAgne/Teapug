@@ -1,7 +1,7 @@
 <?php
 namespace App\Container\Routing;
 
-use Config, Protocol;
+use Config, Protocol, EventListener;
 
 class Route {
     
@@ -27,37 +27,21 @@ class Route {
             self::checkForMissingMethods();
         }
         
-        if($_SERVER['REQUEST_METHOD'] == "POST"){
+        if($_SERVER['REQUEST_METHOD'] == POST){
             //CSRF token
-            if(!isset($_POST['_token'])) return self::set_error('401', ['Missing token']);
+            if(!isset($_POST['_token'])) 
+                return self::set_error('400');
             
-            if($_POST['_token'] != $_SESSION['_token']){
-               return self::set_error('418');
-            } 
-
-            switch(strtoupper($_POST['_method'])) {
-                    
-                case PUT:
-                    return self::method(PUT, $route);
-                break;
-
-                case PATCH:
-                    return self::method(PATCH, $route);
-                break;
-
-                case DELETE:
-                    return self::method(DELETE, $route);
-                break;
-              
-                case POST:
-                    return self::method(POST, $route);
-                break;
-
-                default:
-                    return self::set_error('405');
-                break;
-            }
+            if($_POST['_token'] != $_SESSION['_token'])
+                return self::set_error('418');
+            
+            if(in_array(strtoupper($_POST['_method']), [PUT, PATCH, DELETE, POST]))
+                return self::method(strtoupper($_POST['_method']), $route);
+                
+            return self::set_error('405');
+            
         } else {
+            
             return self::method(GET, $route);
         }
     }
@@ -83,22 +67,14 @@ class Route {
     
     
     public static function method($method, $route){
-        
         if(array_key_exists($route, self::$routes[$method])){
-            $key = self::$routes[$method][$route];
             
-            if(isset($key['filter']['auth'])){
-                if(!isset($_SESSION['uuid'])){
-                    if(isset($key['filter']['callback'])){
-                        return call_user_func_array($key['filter']['callback'], [(object)$key]);   
-                    }
-                    return self::set_error('403');   
-                }
+            if(EventListener::have(E_AUTH)){
+                EventListener::call(E_AUTH);
+                return self::set_error('403');
             }
             
-            if(isset($key['filter']['before'])){
-                call_user_func_array($key['filter']['before'], [(object)$key]);
-            }
+            EventListener::call(E_BEFORE);
             
             return self::$routes[$method][$route];
         } else {
@@ -108,7 +84,7 @@ class Route {
     
     public static function set_error($error, $route = ''){
         Protocol::send($error);
-        return array_key_exists($error, self::$routes[ERROR]) ? self::$routes[ERROR][$error] : ['error' => "$error: Please set up a $error page"];    
+        return array_key_exists($error, self::$routes[ERROR]) ? self::$routes[ERROR][$error] : ['error' => "$error: Please set up a $error page", "filter" => null];    
     }
     
     

@@ -36,4 +36,18 @@
 
 
 // Mainpage
-Direct::get("/", 'MainController@index')->http_code(418);
+Direct::get("/", 'MainController@index')->http_code(418)->render(function($route, $event, $render){
+    $render::addFunction('render event', "\/\/([^\S\n].*)", "<!--- $1 --->");
+})->after(function($route, $event){
+    echo 'after';
+});
+
+
+Direct::get('/test/{hei?}', function(){
+    return 'test';
+})->before(function($route){
+    echo 'before';
+})->after(function(){
+    echo 'hello';
+})->cache();
+

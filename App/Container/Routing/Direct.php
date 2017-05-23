@@ -2,7 +2,7 @@
 
 namespace App\Container\Routing;
 
-use Config;
+use Config, EventListener, Protocol, Cache;
 
 class Direct extends Route{
     
@@ -32,6 +32,10 @@ class Direct extends Route{
             'filter' => [],
         ];
 
+    }
+    
+    public function get_route(){
+        return $this->route;
     }
     
     /**
@@ -110,29 +114,30 @@ class Direct extends Route{
         self::put("$url/create", "$controller@put")->auth();
     }
     
-    private function add_filter(string $key, $value){
-        parent::$routes[$this->type][$this->route]['filter'][$key] = $value;
+    private function addEventListener($event = E_AFTER, $callback, $id){
+        EventListener::add($event, $callback, $id);
         return $this;
     }
     
-    public function http_code(int $code){
-        return $this->add_filter('http_code', $code);
+    public function http_code(int $code, $msg = null){
+        return $this->addEventListener(E_AFTER, function() use($code, $msg){
+            Protocol::send($code, $msg);
+        }, $this);
     }
     
-    private function Authenticate($grade, callable $callback = null){        
-        $this->add_filter('auth', true);
-        $this->add_filter('grade', $grade);
+    private function Authenticate($grade, callable $callback = null){
+        if(is_callable($callback)) return $this->addEventListener(E_AUTH, $callback, $this);
         
-        if(is_callable($callback)) $this->add_filter('callback', $callback);
-        
-        return $this->add_filter('callback', function(){
-            Direct::re('/login');
-        });
+        return $this->addEventListener(E_AUTH, function(){
+            if(isset($_SESSION['uuid']))
+                Direct::re('/login');
+        }, $this);
     }
     
     public function Cache(callable $callable = null){
-        if(is_callable($callable) && call_user_func($callable)) return $this->add_filter('cache', true);
-        if(!is_callable($callable)) return $this->add_filter('cache', true);
+        $cache = function() {};
+        if(is_callable($callable) && call_user_func($callable)) return $this->addEventListener(E_AFTER, $cache, $this);
+        if(!is_callable($callable)) return $this->addEventListener(E_AFTER, $cache, $this);
     }
     
     public function Auth(callable $callback = null){
@@ -149,15 +154,22 @@ class Direct extends Route{
     
     public function before(callable $callable = null){
         if(is_callable($callable))
-            return $this->add_filter('before', $callable);
+            $this->addEventListener(E_BEFORE, $callable, $this);
         return $this;
     }
     
     public function after(callable $callable = null){
         if(is_callable($callable))
-            return $this->add_filter('after', $callable);
+            $this->addEventListener(E_AFTER, $callable, $this);
         return $this;
     }
+    
+    public function render(callable $callable = null){
+        if(is_callable($callable))
+            $this->addEventListener(E_RENDER, $callable, $this);
+        return $this;
+    }
+    
     
     /**
      * Gets called when a method on \App\Direct does not exist
@@ -166,7 +178,7 @@ class Direct extends Route{
      * @param string $args 
      */
     public function __call($func, $args){
-        die($func."(".implode(', ', $args).") is not a method of ".__CLASS__);
+        dd($func."(".count($args)." args) is not a method of Direct");
     }
     
 }

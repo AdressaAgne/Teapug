@@ -103,7 +103,7 @@ class Config {
         '\App\Container\Helpers\Request'        => 'Request',
         '\App\Container\Controller\Controller'  => 'Controller',
         '\App\Container\Helpers\Protocol'       => 'Protocol',
-        '\App\Container\Helpers\FilterHandler'  => 'FilterHandler',
+        '\App\Container\Helpers\EventListener'  => 'EventListener',
 
         // Interfaces
         
@@ -130,11 +130,22 @@ class Config {
      */
     
     public static $constants = [
+        
+        // Methods
+        
         'GET'      => 'GET',
         'POST'     => 'POST',
         'PUT'      => 'PUT',
         'PATCH'    => 'PATCH',
         'DELETE'   => 'DELETE',
         'ERROR'    => 'ERROR',
+        
+        // Events
+        'E_AUTH' => 'event_authenticate',
+        'E_AFTER' => 'event_afterController',
+        'E_CACHE' => 'event_cache',
+        'E_BEFORE' => 'event_beforeController',
+        'E_RENDER' => 'event_rendercode',
+        
     ];
 }

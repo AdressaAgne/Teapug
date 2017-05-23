@@ -1,7 +1,7 @@
 <?php
 namespace App\Container;
 
-use Cache, Config, Protocol;
+use Cache, Config, Protocol, EventListener;
 
 class App extends Routing\RouteHandler{
 
@@ -19,6 +19,9 @@ class App extends Routing\RouteHandler{
         
         $page = $this->get_page_data();    
         if(gettype($page) == 'string'){
+            if(EventListener::have(E_CACHE))
+                $cache->cache_file($page);
+            
             echo $page;
             return;
         }
