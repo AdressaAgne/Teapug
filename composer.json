@@ -1,0 +1,8 @@
+{
+    "name": "orangee/teapot",
+    "description": "A small mvc framework",
+    "require": {
+        "php": "^7.0",
+        "talesoft/tale-pug": "^1.5.0"
+    }
+}

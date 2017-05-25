@@ -2,7 +2,7 @@
 
 namespace App\Auth;
 
-use DB, Config, User;
+use DB, Config, User, EventListener;
 
 class Account extends DB{  
     /**
@@ -13,6 +13,8 @@ class Account extends DB{
      * @return boolean
      */
     public static function login($username, $password, $remember = false){
+
+        EventListener::call(E_LOGIN);
 
         $user = DB::select('users', ['*'], ['username' => $username]);
 
@@ -34,7 +36,7 @@ class Account extends DB{
 
         $_SESSION['uuid'] = $user['id'];
         $_SESSION['rank'] = isset($user['rank']) ? $user['rank'] : null;
-
+        
         return true;
     }
 
@@ -48,6 +50,9 @@ class Account extends DB{
      * @return boolean
      */
     public static function register($username, $pw1, $pw2, $mail){
+        
+        EventListener::call(E_REGISTER);
+        
         if($pw1 != $pw2) return 'passwords does not match';
 
         if(DB::select('users', ['username'], ['username' => $username])->rowCount() > 0) return 'Username already taken';

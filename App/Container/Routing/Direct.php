@@ -114,30 +114,30 @@ class Direct extends Route{
         self::put("$url/create", "$controller@put")->auth();
     }
     
-    private function addEventListener($event = E_AFTER, $callback, $id){
-        EventListener::add($event, $callback, $id);
+    private function addEventListener($event = E_AFTER, $callback){
+        EventListener::add($event, $callback, $this);
         return $this;
     }
     
     public function http_code(int $code, $msg = null){
         return $this->addEventListener(E_AFTER, function() use($code, $msg){
             Protocol::send($code, $msg);
-        }, $this);
+        });
     }
     
     private function Authenticate($grade, callable $callback = null){
-        if(is_callable($callback)) return $this->addEventListener(E_AUTH, $callback, $this);
+        if(is_callable($callback)) return $this->addEventListener(E_AUTH, $callback);
         
         return $this->addEventListener(E_AUTH, function(){
             if(isset($_SESSION['uuid']))
                 Direct::re('/login');
-        }, $this);
+        });
     }
     
     public function Cache(callable $callable = null){
         $cache = function() {};
-        if(is_callable($callable) && call_user_func($callable)) return $this->addEventListener(E_AFTER, $cache, $this);
-        if(!is_callable($callable)) return $this->addEventListener(E_AFTER, $cache, $this);
+        if(is_callable($callable) && call_user_func($callable)) return $this->addEventListener(E_AFTER, $cache);
+        if(!is_callable($callable)) return $this->addEventListener(E_AFTER, $cache);
     }
     
     public function Auth(callable $callback = null){
@@ -154,19 +154,19 @@ class Direct extends Route{
     
     public function before(callable $callable = null){
         if(is_callable($callable))
-            $this->addEventListener(E_BEFORE, $callable, $this);
+            $this->addEventListener(E_BEFORE, $callable);
         return $this;
     }
     
     public function after(callable $callable = null){
         if(is_callable($callable))
-            $this->addEventListener(E_AFTER, $callable, $this);
+            $this->addEventListener(E_AFTER, $callable);
         return $this;
     }
     
     public function render(callable $callable = null){
         if(is_callable($callable))
-            $this->addEventListener(E_RENDER, $callable, $this);
+            $this->addEventListener(E_RENDER, $callable);
         return $this;
     }
     

@@ -6,7 +6,7 @@
 *   Example:
 *   Direct::get('/', 'MainController@index')
 *   Direct::get('/profole', 'MainController@profole')->auth()
-* 
+*
 *   url = /test/{var}/{optional?}
 *   add a ? at the end of a variable to make it optional like {var?}
 *
@@ -38,16 +38,6 @@
 // Mainpage
 Direct::get("/", 'MainController@index')->http_code(418)->render(function($route, $event, $render){
     $render::addFunction('render event', "\/\/([^\S\n].*)", "<!--- $1 --->");
-})->after(function($route, $event){
-    echo 'after';
 });
 
-
-Direct::get('/test/{hei?}', function(){
-    return 'test';
-})->before(function($route){
-    echo 'before';
-})->after(function(){
-    echo 'hello';
-})->cache();
 
