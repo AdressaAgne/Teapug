@@ -1,6 +1,6 @@
 {
-    "name": "orangee/teapot",
-    "description": "A small mvc framework",
+    "name": "orangee/teapug",
+    "description": "A Teapot with a pug",
     "require": {
         "php": "^7.0",
         "talesoft/tale-pug": "^1.5.0"
