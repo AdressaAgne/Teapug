@@ -4,11 +4,14 @@ block scripts
     script(src= $assets.'js/main.js')
 
 block content
-    h1 I'm a Teapug MVC
+    
+    p: img(src=$assets.'/img/pug.jpg', height='280')
+    
+    h1 I'm a Teapug
 
     p Can i have a pug of tea please?
 
-    p Start your adventure, go to App/RouteSetup.php
+    p Start your teapug adventure! Go to App/RouteSetup.php and define some routes!
     p Visit our 
         a(href='https://github.com/OrangeeWeb/teapot') Github
         |  page for help
@@ -19,7 +22,7 @@ block content
     - Render::formend()
         
 
-    p Why Teaput? because 418
+    p Why Teapot? because 418
         
 
     

@@ -15,15 +15,13 @@ body{
 }
 
 p{
-    text-align: center;
-    font-variant: small-caps;
     padding: 10px 20px;
 }
 
 h1{
-    text-align: center;
     color: #009688;
     font-weight: bold;
     font-size: 3em;
     margin-bottom: 50px;
+    padding-left: 20px;
 }
