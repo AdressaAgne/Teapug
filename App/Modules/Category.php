@@ -1,13 +1,15 @@
-<?php 
+<?php
 
 namespace App\Modules;
 
-use DB, Module, Sorting;
+use DB, Module;
 
 
-class Category extends DB implements Module {
-    
-    function __construct(){
-        
-    }
+class Category extends Module {
+
+	protected $table = 'categories';
+
+	function __construct(){
+
+	}
 }

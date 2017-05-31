@@ -5,14 +5,11 @@ use Controller, Request, View;
 
 class MainController extends Controller {
 
-    use \MigrateTrait;
+	use \MigrateTrait;
 
-    public function index(Request $data){
+	public function index(Request $data){
+		$user = $this->all('users', 'User');
 
-        return View::make('index', [
-            'data' => $data,
-            'title' => time(),
-            'fishes' => ['Laks', 'Tårsk', 'Rokke'],
-        ]);
-    }
+		return $user;
+	}
 }

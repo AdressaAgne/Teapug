@@ -15,10 +15,10 @@ session_regenerate_id();
  * @param function function($class)
  */
 spl_autoload_register(function($class){
-    $file = str_replace('\\', '/', "../{$class}.php");
-    if(file_exists($file)){
-        require_once($file);
-    }
+	$file = str_replace('\\', '/', "../{$class}.php");
+	if(file_exists($file)){
+		require_once($file);
+	}
 });
 
 // Turn off error reporting when we are not in debug mode
@@ -26,24 +26,19 @@ if(!Config::$debug_mode) error_reporting(0);
 
 // Setting up aliases
 foreach(Config::$aliases as $key => $value){
-    class_alias($key, $value);
+	class_alias($key, $value);
 }
 
 // Define constants
 foreach (Config::$constants as $key => $value) {
-    define($key, $value);
+	define($key, $value);
 }
 
-function dd(...$param){
-    // @: Header will output a notice if there is an error already, 
-    // since we can not send the header after text has been sent.
-    // So we remove all error logging from the header()
-    @header('Content-type: application/json');
-    die(print_r($param, true));
-}
+require_once('../App/Container/functions.php');
 
 // Adding routing
 require_once('../App/RouteSetup.php');
+
 
 // require the application
 require_once("../App/Container/App.php");

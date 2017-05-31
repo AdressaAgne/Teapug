@@ -1,28 +1,29 @@
 extends layout/page
 
 block scripts
-    script(src= $assets.'js/main.js')
+	script(src= $assets.'js/1.js')
 
 block content
-    
-    p: img(src=$assets.'/img/pug.jpg', height='280')
-    
-    h1 I'm a Teapug
+	
+	p: img(src=$assets.'/img/pug.jpg', height='280')
+	
+	h1 I'm a Teapug
 
-    p Can i have a pug of tea please?
+	p Can i have a pug of tea please?
 
-    p Start your teapug adventure! Go to App/RouteSetup.php and define some routes!
-    p Visit our 
-        a(href='https://github.com/OrangeeWeb/teapot') Github
-        |  page for help
-    
-    //- To run php start line with -
-    - Render::form('', 'PUT')
-        
-    - Render::formend()
-        
 
-    p Why Teapot? because 418
-        
+	p Start your teapug adventure! Go to App/RouteSetup.php and define some routes!
+	p Visit our 
+		a(href='https://github.com/OrangeeWeb/teapot') Github
+		|  page for help
+	
+	//- To run php start line with -
+	- Render::form('', 'PUT')
+		
+	- Render::formend()
+		
 
-    
+	p Why Teapot? because 418
+		
+
+	

@@ -6,154 +6,153 @@ namespace App\Container;
 class Config {
 
 
-    /**
-    *   when true: No cache, adding /migrate and /route, missing controller checks
-    */
-    public static $debug_mode = true;
+	/**
+	*   when true: No cache, adding /migrate and /route, missing controller checks
+	*/
+	public static $debug_mode = true;
 
-    /**
-    *   Use Tale-Pug
-    *   https://github.com/Talesoft/tale-pug
-    */
-    public static $tale_pug = true;
-    public static $tale_pug_pretty = false;
+	/**
+	*   Use Tale-Pug
+	*   https://github.com/Talesoft/tale-pug
+	*/
+	public static $tale_pug = true;
+	public static $tale_pug_pretty = false;
 
-    /**
-    *   Database Connection
-    */
+	/**
+	*   Database Connection
+	*/
 
-    public static $host     = 'localhost';
-    public static $database = 'test';
-    public static $username = 'root';
-    public static $password = 'root';
+	public static $host     = 'localhost';
+	public static $database = 'test';
+	public static $username = 'root';
+	public static $password = 'root';
 
-    /**
-    *   CSRF token, this will be randomly generated for each session
-    */
+	/**
+	*   CSRF token, this will be randomly generated for each session
+	*/
 
-    public static $form_token = 'jlhkgfdlkshdjkskdfskjdhf';
+	public static $form_token = 'jlhkgfdlkshdjkskdfskjdhf';
 
-    /**
-    *   Chache
-    */
+	/**
+	*   Chache
+	*/
 
-    public static $cookie_time  = 86400 * 30;
-    public static $cache_time   = 3600;
-    public static $cache_folder = 'cache/';
+	public static $cookie_time  = 86400 * 30;
+	public static $cache_time   = 3600;
+	public static $cache_folder = 'cache/';
 
-    /**
-    *   Do not change
-    */
+	/**
+	*   Do not change
+	*/
 
-    public static $route  = '/';
-    public static $source = '';
+	public static $route  = '/';
+	public static $source = '';
 
-    /**
-    *   File Uploading
-    */
+	/**
+	*   File Uploading
+	*/
 
-    public static $files    = [
-        "original"          => "/public/images/original/",
-        "compressed"        => "/public/images/compressed/",
-        "compressedSize"    => 600,
-        "compressedSize2"   => 1000,
-    ];
+	public static $files    = [
+		"original"          => "/public/images/original/",
+		"compressed"        => "/public/images/compressed/",
+		"compressedSize"    => 600,
+		"compressedSize2"   => 1000,
+	];
 
-    public static $theme = 'basic';
+	public static $theme = 'basic';
 
-    /**
-    *   Namespace for controllers
-    */
+	/**
+	*   Namespace for controllers
+	*/
 
-    public static $controllers = '\App\Controllers\\';
+	public static $controllers = '\App\Controllers\\';
 
-    /**
-    *   Class aliases
-    */
+	/**
+	*   Class aliases
+	*/
 
-    public static $aliases = [
+	public static $aliases = [
 
-        '\App\Container\App'                    => 'App',
+		'\App\Container\App'                    => 'App',
 
-        // Config
-        '\App\Container\Config'                 => 'Config',
+		// Config
+		'\App\Container\Config'                 => 'Config',
 
-        // Database
-        '\App\Container\Database\Database'      => 'DB',
+		// Database
+		'\App\Container\Database\Database'      => 'DB',
 
-        '\App\Container\Database\Row'           => 'Row',
-        '\App\Container\Database\PID'           => 'PID',
-        '\App\Container\Database\Integer'       => 'Integer',
-        '\App\Container\Database\Varchar'       => 'Varchar',
-        '\App\Container\Database\Boolean'       => 'Boolean',
-        '\App\Container\Database\Timestamp'     => 'Timestamp',
-        '\App\Container\Database\Migrations'    => 'Migrations',
+		'\App\Container\Database\Row'           => 'Row',
+		'\App\Container\Database\PID'           => 'PID',
+		'\App\Container\Database\Integer'       => 'Integer',
+		'\App\Container\Database\Varchar'       => 'Varchar',
+		'\App\Container\Database\Boolean'       => 'Boolean',
+		'\App\Container\Database\Timestamp'     => 'Timestamp',
+		'\App\Container\Database\Migrations'    => 'Migrations',
 
 
-        // Extension package
-        '\App\Auth\Account'                     => 'Account',
+		// Extension package
+		'\App\Auth\Account'                     => 'Account',
 
-        // Routing
-        '\App\Container\View'                   => 'View',
-        '\App\Container\Routing\Direct'         => 'Direct',
-        '\App\Container\Routing\Route'          => 'Route',
-        '\App\Container\Routing\RouteHandler'   => 'RouteHandler',
-        '\App\Container\Render'                 => 'Render',
+		// Routing
+		'\App\Container\View'                   => 'View',
+		'\App\Container\Routing\Direct'         => 'Direct',
+		'\App\Container\Routing\Route'          => 'Route',
+		'\App\Container\Routing\RouteHandler'   => 'RouteHandler',
+		'\App\Container\Render'                 => 'Render',
 
-        // Helpres
+		// Helpres
 
-        '\App\Container\Helpers\Uploader'       => 'Uploader',
-        '\App\Container\Helpers\Compressor'     => 'Compressor',
-        '\App\Container\Helpers\Sorting'        => 'Sorting',
-        '\App\Container\Helpers\Cache'          => 'Cache',
-        '\App\Container\Helpers\Request'        => 'Request',
-        '\App\Container\Controller\Controller'  => 'Controller',
-        '\App\Container\Helpers\Protocol'       => 'Protocol',
-        '\App\Container\Helpers\EventListener'  => 'EventListener',
+		'\App\Container\Helpers\Uploader'       => 'Uploader',
+		'\App\Container\Helpers\Compressor'     => 'Compressor',
+		'\App\Container\Helpers\Sorting'        => 'Sorting',
+		'\App\Container\Helpers\Cache'          => 'Cache',
+		'\App\Container\Helpers\Request'        => 'Request',
+		'\App\Container\Controller\Controller'  => 'Controller',
+		'\App\Container\Controller\Module'      => 'Module',
+		'\App\Container\Helpers\Protocol'       => 'Protocol',
+		'\App\Container\Helpers\EventListener'  => 'EventListener',
 
-        // Interfaces
+		// Interfaces
 
-        'App\Container\Interfaces\ApiController'      => 'ApiController',
-        'App\Container\Interfaces\Module'             => 'Module',
-        'App\Container\Interfaces\StackController'    => 'StackController',
-        'App\Container\Interfaces\NormalController'   => 'NormalController',
+		'App\Container\Interfaces\ApiController'      => 'ApiController',
+		'App\Container\Interfaces\ModuleInterface'    => 'ModuleInterface',
+		'App\Container\Interfaces\StackController'    => 'StackController',
+		'App\Container\Interfaces\NormalController'   => 'NormalController',
 
-        // Traits
+		// Traits
 
-        'App\Container\Traits\IndexTrait'             => 'IndexTrait',
-        'App\Container\Traits\MigrateTrait'           => 'MigrateTrait',
+		'App\Container\Traits\IndexTrait'             => 'IndexTrait',
+		'App\Container\Traits\MigrateTrait'           => 'MigrateTrait',
 
-        // Modules
-        '\App\Modules\User'                 => 'User',
-        '\App\Modules\Category'             => 'Category',
-        '\App\Modules\Image'                => 'Image',
+		// Modules
+		'\App\Modules\User'                 => 'User',
+		'\App\Modules\Category'             => 'Category',
+		'\App\Modules\Image'                => 'Image',
 
-    ];
+	];
 
-    /**
-     *  Constants
-     */
+	/**
+	 *  Constants
+	 */
 
-    public static $constants = [
+	public static $constants = [
 
-        // Methods
+		// Methods
+		'GET'      => 'GET',
+		'POST'     => 'POST',
+		'PUT'      => 'PUT',
+		'PATCH'    => 'PATCH',
+		'DELETE'   => 'DELETE',
+		'ERROR'    => 'ERROR',
 
-        'GET'      => 'GET',
-        'POST'     => 'POST',
-        'PUT'      => 'PUT',
-        'PATCH'    => 'PATCH',
-        'DELETE'   => 'DELETE',
-        'ERROR'    => 'ERROR',
+		// Events
+		'E_AUTH' => 'event_authenticate',
+		'E_AFTER' => 'event_afterController',
+		'E_CACHE' => 'event_cache',
+		'E_BEFORE' => 'event_beforeController',
+		'E_RENDER' => 'event_rendercode',
+		'E_LOGIN' => 'event_authlogin',
+		'E_REGISTER' => 'event_authregister',
 
-        // Events
-
-        'E_AUTH' => 'event_authenticate',
-        'E_AFTER' => 'event_afterController',
-        'E_CACHE' => 'event_cache',
-        'E_BEFORE' => 'event_beforeController',
-        'E_RENDER' => 'event_rendercode',
-        'E_LOGIN' => 'event_authlogin',
-        'E_REGISTER' => 'event_authregister',
-
-    ];
+	];
 }

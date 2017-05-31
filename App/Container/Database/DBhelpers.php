@@ -7,7 +7,6 @@ use PDO;
 
 class DBhelpers{
 	public static $db;
-	public static $table;
 
 	/**
 	 * Init Database connection
@@ -17,7 +16,7 @@ class DBhelpers{
 		try {
 			$dns = 'mysql:host='.Config::$host.';dbname='.Config::$database;
 			self::$db = new PDO($dns, Config::$username, Config::$password);
-			
+
 			self::$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
 			self::$db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 			self::$db->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true);
@@ -104,6 +103,10 @@ class DBhelpers{
 		$return = $this->query($query);
 		$this->tableStatus[] = $return;
 		return $return;
+	}
+
+	public function addConstraint(){
+		
 	}
 
 	/**
